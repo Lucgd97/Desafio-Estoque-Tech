@@ -1,0 +1,15 @@
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\ProdutoEstoque.exe
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\ProdutoEstoque.deps.json
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\ProdutoEstoque.runtimeconfig.json
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\ProdutoEstoque.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\ProdutoEstoque.pdb
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\ProdutoEstoque.csproj.AssemblyReference.cache
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\ProdutoEstoque.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\ProdutoEstoque.AssemblyInfoInputs.cache
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\ProdutoEstoque.AssemblyInfo.cs
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\ProdutoEstoque.csproj.CoreCompileInputs.cache
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\ProdutoEstoque.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\refint\ProdutoEstoque.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\ProdutoEstoque.pdb
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\ProdutoEstoque.genruntimeconfig.cache
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\ref\ProdutoEstoque.dll
