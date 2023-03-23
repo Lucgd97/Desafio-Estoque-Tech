@@ -13,3 +13,14 @@ C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Pro
 C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\ProdutoEstoque.pdb
 C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\ProdutoEstoque.genruntimeconfig.cache
 C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\ref\ProdutoEstoque.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\System.Configuration.ConfigurationManager.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\System.Drawing.Common.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\System.Security.Permissions.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\System.Windows.Extensions.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\runtimes\win\lib\net6.0\Microsoft.Win32.SystemEvents.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Drawing.Common.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Security.Cryptography.ProtectedData.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\bin\Debug\net6.0\runtimes\win\lib\net6.0\System.Windows.Extensions.dll
+C:\Users\lucas\OneDrive\Área de Trabalho\Alura\C# Danilo\Desafios Danilo\01.Produto e Estoque\ProdutoEstoque\obj\Debug\net6.0\ProdutoEstoque.csproj.CopyComplete

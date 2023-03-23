@@ -12,7 +12,8 @@ namespace Tela
         {
             int Saida_Programa = 0;
             int Cadastrar_Produto = 1;
-            int Estoque = 2;
+            int Cadastrar_Cliente = 2;
+            int Estoque = 3;
 
 
             while (true)
@@ -22,7 +23,8 @@ namespace Tela
                     "\n Digite uma das opções abaixo:" +
                     "\n 0 - Sair do programa" +
                     "\n 1 - Para cadastrar produto" +
-                    "\n 2 - Para visualizar estoque";
+                    "\n 2 - Cadastrar Cliente" +
+                    "\n 3 - Para visualizar estoque";
                 Console.WriteLine(mensagem);
 
                 int valor = int.Parse(Console.ReadLine());
@@ -34,7 +36,12 @@ namespace Tela
                 else if (valor == Cadastrar_Produto)
                 {
                     // tela cliente chamar
-                    Console.WriteLine("======== Cadastro de Cliente ========");
+                    Console.WriteLine("======== Cadastro de Produto ========");
+                }
+                else if (valor == Cadastrar_Cliente)
+                {
+                    TelaCliente.Chamar();
+                    Console.WriteLine("======== Cadastro de Produto ========");
                 }
                 else if (valor == Estoque)
                 {
