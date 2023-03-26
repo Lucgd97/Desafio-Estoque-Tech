@@ -9,7 +9,7 @@ namespace Models
     public record Estoque
     {
         public required string Id { get; set; }
-        public required string IdCliente { get; set; }
+        public required string IdProduto { get; set; }
         public double Quantidade { get; set; } = default!;
         public DateTime Data { get; set; } = default!;
     }
