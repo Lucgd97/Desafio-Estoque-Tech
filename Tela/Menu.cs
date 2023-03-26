@@ -41,7 +41,7 @@ namespace Tela
                 else if (valor == Cadastrar_Cliente)
                 {
                     TelaCliente.Chamar();
-                    Console.WriteLine("======== Cadastro de Produto ========");
+                    Console.WriteLine("======== Cadastro de Cliente ========");
                 }
                 else if (valor == Estoque)
                 {
