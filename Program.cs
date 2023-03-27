@@ -92,7 +92,80 @@ async Task mostrarEstoque()
     Console.ReadLine();
 }
 
+async Task listarProdutosCadastrados()
+{
+    if((await TodosProdutos()).Count == 0)
+    {
+        await menuCadastrarProdutosSeNaoExiste();
+    }
 
+    await mostrarProdutos(false, 0, "===============[ Selecione um produto da lista]===============");
+}
+
+async Task mostrarProdutos(
+    bool sleep = true,
+    int timerSleep = 2000,
+    string header = "===============[ Lista de Produtos ]===============")
+{
+    Console.Clear();
+    Console.WriteLine(header); ;
+
+    foreach (var produto in (await TodosProdutos()))
+    {
+        Console.WriteLine("Id: " + produto.Id);
+        Console.WriteLine("Nome: " + produto.Nome);
+        Console.WriteLine("Codigo: " + produto.Codigo);
+        Console.WriteLine("Fornecedor: " + produto.Fornecedor);
+        Console.WriteLine("-------------------------");
+
+        if (sleep)
+        {
+            Thread.Sleep(timerSleep);
+            Console.Clear();
+        }
+    }
+}
+
+async Task cadastrarProduto()
+{
+    var id = Guid.NewGuid().ToString();
+
+    Console.WriteLine("Informe o nome do Produto:");
+    var nomeProduto = Console.ReadLine();
+
+    Console.WriteLine($"Informe o codigo do produto {nomeProduto}: ");
+    var codigo = Console.ReadLine();
+
+    Console.WriteLine($"informe o fornecedor do produto {nomeProduto}: ");
+    var fornecedor = Console.ReadLine();
+
+    if ((await TodosProdutos()).Count > 0)
+    {
+        Produto? pro = (await TodosProdutos()).Find(p => p.Codigo== codigo);
+        if (pro != null)
+        {
+            mensagem($"Produto já cadastrado com este codigo {codigo}, cadastre novamente");
+            await cadastrarProduto();
+        }
+    }
+
+    await produtoServico.Persistencia.Salvar(new Produto
+    {
+        Id = id,
+        Nome = nomeProduto ?? "[Sem Nome]",
+        Codigo = codigo != null ? codigo : "[Sem Codigo]",
+        Fornecedor = fornecedor ?? "[Sem Fornecedor]"
+    });
+
+    mensagem($""" {nomeProduto} cadastrado com sucesso""");
+}
+
+void mensagem(string msg)
+{
+    Console.Clear();
+    Console.WriteLine(msg);
+    Thread.Sleep(1500);
+}
 
 
 
