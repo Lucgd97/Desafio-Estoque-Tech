@@ -2,6 +2,9 @@
 using Models;
 using ProdutoEstoque.Servicos;
 
+
+
+
 async Task<List<Produto>> TodosProdutos()
 {
     return await produtoServico.Persistencia.Todos();
@@ -239,6 +242,33 @@ async Task<Produto> capturaProduto()
 
     return produto;
 
+}
+
+async Task menuCadastrarProdutosSeNaoExiste()
+{
+    Console.WriteLine("""
+        O que deseja fazer?
+        1 - Cadastrar Produto
+        2 -Voltar ao menu
+        3 - Sair do programa
+        """);
+
+    var opcao = Console.ReadLine()?.Trim();
+
+    switch(opcao)
+    {
+        case "1":
+            await cadastrarProduto();
+            break;
+        case "2":
+            break;
+        case "3":
+            System.Environment.Exit(0);
+            break;
+        default:
+            Console.WriteLine("Opção inválida");
+            break;
+    }
 }
 
 
