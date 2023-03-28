@@ -167,5 +167,81 @@ void mensagem(string msg)
     Thread.Sleep(1500);
 }
 
+async Task retirandoEstoque()
+{
+    Console.Clear();
+    var produto = await capturarProduto();
+    Console.Clear();
+    Console.WriteLine("Digite o valor para retirada:");
+    int estoqueAtual = Convert.ToInt32(Console.ReadLine());
+
+    await estoqueServico.Persistencia.Salvar(new Estoque
+    {
+        Id = Guid.NewGuid().ToString(),
+        IdProduto = produto.Id,
+        Quantidade = estoqueAtual * -1,
+        Data = DateTime.Now
+    });
+
+    mensagem($"""
+        Retirada realizada com sucesso ...
+        Saldo do estoque {produto.Nome} é de Qtd: {await estoqueServico.SaldoProduto(produto.Id)}
+        """);
+}
+
+async Task adicionandoEstoque()
+{
+    Console.Clear();
+    var produto = await capturaProduto();
+    Console.Clear();
+    Console.WriteLine("Digite o valor para aumentar estoque:");
+    int estoqueAtual = Convert.ToInt32(Console.ReadLine());
+
+    await estoqueServico.Persistencia.Salvar(new Estoque
+    {
+        Id = Guid.NewGuid().ToString(),
+        IdProduto = produto.Id,
+        Quantidade = estoqueAtual,
+        Data = DateTime.Now
+    });
+
+    mensagem($"""
+        Aumento de estoque adicionado com sucesso ...
+        Saldo do estoque {produto.Nome} é de Qtd: {await estoqueServico.SaldoProduto(produto.Id)}
+        """);
+}
+
+async Task<Produto> capturaProduto()
+{
+    await listarProdutosCadastrados();
+    Console.WriteLine("Digite o ID do produto");
+    var idProduto = Console.ReadLine()?.Trim();
+    if(string.IsNullOrEmpty(idProduto))
+    {
+        mensagem("Id do produto inválido!");
+        Console.Clear();
+
+        await menuCadastrarProdutosSeNaoExiste();
+
+        return await capturaProduto();
+    }
+    Produto? produto = await estoqueServico.Persistencia.BuscarPorId(idProduto);
+
+    if(produto == null)
+    {
+        mensagem("Produto não encontrado na lista, digite o ID corretamente da produtos");
+        Console.Clear();
+
+        await menuCadastrarProdutosSeNaoExiste();
+
+        return await capturaProduto();
+    }
+
+    return produto;
+
+}
+
+
+
 
 
