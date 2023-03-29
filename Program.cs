@@ -1,16 +1,18 @@
 ﻿
 using Models;
+using ProdutoEstoque.Infra;
 using ProdutoEstoque.Servicos;
 
-
-
+string localGravacaoDev = Environment.GetEnvironmentVariable("LOCAL_GRAVACAO_DEV_ESTOQUE_TECH") ?? "/tmp";
+ProdutoServico produtoServico = new ProdutoServico(new JsonDriver<Produto>(localGravacaoDev));
+EstoqueServico estoqueServico = new EstoqueServico(new JsonDriver<Estoque>(localGravacaoDev));
 
 async Task<List<Produto>> TodosProdutos()
 {
     return await produtoServico.Persistencia.Todos();
 }
 
-async Task<List<Estoque>> TodosProdutos()
+async Task<List<Estoque>> TodosExtratos()
 {
     return await estoqueServico.Persistencia.Todos();
 }
@@ -76,7 +78,7 @@ async Task mostrarEstoque()
 
     var produto = await capturaProduto();
 
-    var estoqueProduto = await estoqueProduto.ExtratoProduto(produto.Id);
+    var estoqueProduto = await estoqueProduto.TodosExtratos(produto.Id);
     Console.Clear();
     Console.WriteLine("-------------------------");
     foreach(var estoque in estoqueProduto)
@@ -173,7 +175,7 @@ void mensagem(string msg)
 async Task retirandoEstoque()
 {
     Console.Clear();
-    var produto = await capturarProduto();
+    var produto = await capturaProduto();
     Console.Clear();
     Console.WriteLine("Digite o valor para retirada:");
     int estoqueAtual = Convert.ToInt32(Console.ReadLine());
