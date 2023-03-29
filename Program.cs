@@ -26,7 +26,7 @@ while (true)
 
         O que você deseja fazer?
         1 - Cadastrar o Produto
-        2 - ver cadastro e estoque de Produto
+        2 - Ver cadastro e extrato do produto
         3 - Adicionar estoque
         4 - Retirar estoque
         5 - Sair do sistema
@@ -78,12 +78,12 @@ async Task mostrarEstoque()
 
     var produto = await capturaProduto();
 
-    var estoqueProduto = await estoqueProduto.TodosExtratos(produto.Id);
+    var estoqueProduto = await estoqueServico.ExtratoProduto(produto.Id);
     Console.Clear();
     Console.WriteLine("-------------------------");
     foreach(var estoque in estoqueProduto)
     {
-        Console.WriteLine("Data: " + estoque.Data.ToString("dd/MM/yyyy HH:mm:ss");
+        Console.WriteLine("Data: " + estoque.Data.ToString("dd/MM/yyyy HH:mm:ss"));
         Console.WriteLine("Quantidade: " + estoque.Quantidade);
         Console.WriteLine("-------------------------");
     }
@@ -230,7 +230,8 @@ async Task<Produto> capturaProduto()
 
         return await capturaProduto();
     }
-    Produto? produto = await estoqueServico.Persistencia.BuscarPorId(idProduto);
+
+    Produto? produto = await produtoServico.Persistencia.BuscarPorId(idProduto);
 
     if(produto == null)
     {
