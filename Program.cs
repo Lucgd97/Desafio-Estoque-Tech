@@ -25,9 +25,9 @@ while (true)
         ======================[Seja Bem vindo ao Estoque Tech]======================
 
         O que você deseja fazer?
-        1 - Cadastrar o Produto
-        2 - Ver cadastro e extrato do produto
-        3 - Adicionar estoque
+        1 - Cadastrar Produto
+        2 - Ver cadastro e extrato de movimentação de estoque
+        3 - Adicionar ou alterar estoque
         4 - Retirar estoque
         5 - Sair do sistema
         """);
