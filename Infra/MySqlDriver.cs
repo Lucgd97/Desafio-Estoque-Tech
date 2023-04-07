@@ -4,12 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
+
 
 namespace ProdutoEstoque.Infra
 {
     public class MySqlDriver<T> : IPersistencia<T>
     {
+        string connectionString = "server=localhost;user=root;database=mydatabase;port=3306;password=mypassword";
 
+        MySqlConnection connection = new MySqlConnection(connectionString);
         public MySqlDriver(string localGravacao)
         {
             this.localGravacao = localGravacao;
