@@ -1,16 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ZXaYoS5MaTqp4a/s2RdIQgx7q6L5E1y49shWet41sHV/KZteHNe/OES0ZEtvtHJwT2FL3PlgIU1e9vZg7o4vZg==",
+  "dgSpecHash": "S4jcUgGcIcfpo4O5rpxbaT5aZ0loVdCz4DprUV8rQEG8tPY3puYZhakSNqN9/1M7h/PtwWtuMJFdKyv4/7pKfw==",
   "success": true,
   "projectFilePath": "C:\\Users\\lucas\\OneDrive\\Área de Trabalho\\Alura\\C# Danilo\\Desafios Danilo\\01.Produto e Estoque\\ProdutoEstoque\\ProdutoEstoque.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\lucas\\.nuget\\packages\\microsoft.win32.systemevents\\7.0.0\\microsoft.win32.systemevents.7.0.0.nupkg.sha512",
-    "C:\\Users\\lucas\\.nuget\\packages\\system.configuration.configurationmanager\\7.0.0\\system.configuration.configurationmanager.7.0.0.nupkg.sha512",
-    "C:\\Users\\lucas\\.nuget\\packages\\system.diagnostics.eventlog\\7.0.0\\system.diagnostics.eventlog.7.0.0.nupkg.sha512",
-    "C:\\Users\\lucas\\.nuget\\packages\\system.drawing.common\\7.0.0\\system.drawing.common.7.0.0.nupkg.sha512",
-    "C:\\Users\\lucas\\.nuget\\packages\\system.security.cryptography.protecteddata\\7.0.0\\system.security.cryptography.protecteddata.7.0.0.nupkg.sha512",
-    "C:\\Users\\lucas\\.nuget\\packages\\system.security.permissions\\7.0.0\\system.security.permissions.7.0.0.nupkg.sha512",
-    "C:\\Users\\lucas\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }

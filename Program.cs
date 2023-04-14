@@ -26,10 +26,10 @@ while (true)
 
         O que você deseja fazer?
         1 - Cadastrar Produto
-        2 - Ver cadastro e extrato de movimentação de estoque
-        3 - Adicionar ou alterar estoque
-        4 - Retirar estoque
-        5 - Sair do sistema
+        2 - Ver Cadastro e extrato de movimentação de estoque
+        3 - Adicionar ou Alterar Estoque
+        4 - Retirar Estoque
+        5 - Sair do Sistema
         """);
 
     var opcao = Console.ReadLine()?.Trim();
