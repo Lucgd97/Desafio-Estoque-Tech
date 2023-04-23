@@ -46,9 +46,13 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "dependencies": {
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.33, )"
+            },
             "System.Configuration.ConfigurationManager": {
               "target": "Package",
-              "version": "[7.0.0, )"
+              "version": "[8.0.0-preview.3.23174.8, )"
             }
           },
           "imports": [
