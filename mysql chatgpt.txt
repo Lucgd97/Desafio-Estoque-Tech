@@ -1,0 +1,255 @@
+using System;
+using MySql.Data.MySqlClient;
+
+https://www.youtube.com/watch?v=7IvXeUfeX1g
+https://www.devmedia.com.br/desenvolvendo-uma-classe-ado-net-para-acesso-a-dados-sql-server/32336
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        // Connection string com as informações de conexão com o banco de dados
+        string connectionString = "server=localhost;user=root;database=mydatabase;port=3306;password=mypassword";
+
+        // Cria uma conexão com o banco de dados
+        MySqlConnection connection = new MySqlConnection(connectionString);
+
+        try
+        {
+            // Abre a conexão
+            connection.Open();
+
+            // Cria um objeto Command para executar comandos SQL na conexão
+            MySqlCommand command = connection.CreateCommand();
+
+            // Cria a tabela no banco de dados
+            command.CommandText = "CREATE TABLE IF NOT EXISTS MyTable (Id INT PRIMARY KEY AUTO_INCREMENT, Name VARCHAR(50), Age INT)";
+            command.ExecuteNonQuery();
+
+            // Insere um registro na tabela
+            command.CommandText = "INSERT INTO MyTable (Name, Age) VALUES ('John Doe', 30)";
+            command.ExecuteNonQuery();
+
+            // Atualiza um registro na tabela
+            command.CommandText = "UPDATE MyTable SET Age = 31 WHERE Name = 'John Doe'";
+            command.ExecuteNonQuery();
+
+            // Lê os registros da tabela
+            command.CommandText = "SELECT * FROM MyTable";
+            MySqlDataReader reader = command.ExecuteReader();
+            while (reader.Read())
+            {
+                Console.WriteLine($"Id: {reader["Id"]}, Name: {reader["Name"]}, Age: {reader["Age"]}");
+            }
+            reader.Close();
+
+            // Deleta um registro da tabela
+            command.CommandText = "DELETE FROM MyTable WHERE Name = 'John Doe'";
+            command.ExecuteNonQuery();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine("Ocorreu um erro: " + ex.Message);
+        }
+        finally
+        {
+            // Fecha a conexão
+            connection.Close();
+        }
+    }
+}
+
+
+versao 2
+
+using MySql.Data.MySqlClient;
+
+string connectionString = "server=localhost;database=mydatabase;uid=myusername;password=mypassword;";
+MySqlConnection connection = new MySqlConnection(connectionString);
+
+
+connection.Open();
+
+string query = "INSERT INTO users (name, email) VALUES (@name, @email)";
+MySqlCommand cmd = new MySqlCommand(query, connection);
+cmd.Parameters.AddWithValue("@name", "John Doe");
+cmd.Parameters.AddWithValue("@email", "johndoe@example.com");
+cmd.ExecuteNonQuery();
+
+
+string query = "DELETE FROM users";
+MySqlCommand cmd = new MySqlCommand(query, connection);
+cmd.ExecuteNonQuery();
+
+string query = "SELECT * FROM users";
+MySqlCommand cmd = new MySqlCommand(query, connection);
+MySqlDataReader reader = cmd.ExecuteReader();
+
+while (reader.Read())
+{
+    int id = (int)reader["id"];
+    string name = (string)reader["name"];
+    string email = (string)reader["email"];
+    
+    // fazer algo com os dados obtidos
+}
+
+reader.Close();
+
+
+versao 3
+using MySql.Data.MySqlClient;
+
+string connectionString = "server=localhost;database=mydatabase;uid=myusername;password=mypassword;";
+MySqlConnection connection = new MySqlConnection(connectionString);
+
+connection.Open();
+
+string query = "INSERT INTO users (name, email) VALUES (@name, @email)";
+MySqlCommand cmd = new MySqlCommand(query, connection);
+cmd.CommandType = CommandType.Text;
+cmd.Parameters.AddWithValue("@name", "John Doe");
+cmd.Parameters.AddWithValue("@email", "johndoe@example.com");
+cmd.ExecuteNonQuery();
+
+string query = "DELETE FROM users";
+MySqlCommand cmd = new MySqlCommand(query, connection);
+cmd.CommandType = CommandType.Text;
+cmd.ExecuteNonQuery();
+
+string query = "DELETE FROM users WHERE id = @id";
+MySqlCommand cmd = new MySqlCommand(query, connection);
+cmd.CommandType = CommandType.Text;
+cmd.Parameters.AddWithValue("@id", 1);
+cmd.ExecuteNonQuery();
+
+string query = "SELECT * FROM users";
+MySqlCommand cmd = new MySqlCommand(query, connection);
+cmd.CommandType = CommandType.Text;
+MySqlDataReader reader = cmd.ExecuteReader();
+
+while (reader.Read())
+{
+    int id = (int)reader["id"];
+    string name = (string)reader["name"];
+    string email = (string)reader["email"];
+    
+    // fazer algo com os dados obtidos
+}
+
+reader.Close();
+
+string query = "SELECT * FROM users WHERE id = @id";
+MySqlCommand cmd = new MySqlCommand(query, connection);
+cmd.CommandType = CommandType.Text;
+cmd.Parameters.AddWithValue("@id", 1);
+MySqlDataReader reader = cmd.ExecuteReader();
+
+while (reader.Read())
+{
+    int id = (int)reader["id"];
+    string name = (string)reader["name"];
+    string email = (string)reader["email"];
+    
+    // fazer algo com os dados obtidos
+}
+
+reader.Close();
+
+versao 4
+
+salvar
+string connectionString = "server=localhost;user id=root;password=yourpassword;database=yourdatabase";
+string query = "INSERT INTO users (name, email) VALUES (@name, @email)";
+
+using (MySqlConnection connection = new MySqlConnection(connectionString))
+{
+    using (MySqlCommand command = new MySqlCommand(query, connection))
+    {
+        command.Parameters.AddWithValue("@name", "John Doe");
+        command.Parameters.AddWithValue("@email", "johndoe@example.com");
+        connection.Open();
+        int rowsAffected = command.ExecuteNonQuery();
+        Console.WriteLine($"{rowsAffected} rows were affected.");
+    }
+}
+
+excluirTd
+string connectionString = "server=localhost;user id=root;password=yourpassword;database=yourdatabase";
+string query = "DELETE FROM users";
+
+using (MySqlConnection connection = new MySqlConnection(connectionString))
+{
+    using (MySqlCommand command = new MySqlCommand(query, connection))
+    {
+        connection.Open();
+        int rowsAffected = command.ExecuteNonQuery();
+        Console.WriteLine($"{rowsAffected} rows were affected.");
+    }
+}
+
+excluir 1 usuario
+string connectionString = "server=localhost;user id=root;password=yourpassword;database=yourdatabase";
+string query = "DELETE FROM users WHERE id = @id";
+
+using (MySqlConnection connection = new MySqlConnection(connectionString))
+{
+    using (MySqlCommand command = new MySqlCommand(query, connection))
+    {
+        command.Parameters.AddWithValue("@id", 1);
+        connection.Open();
+        int rowsAffected = command.ExecuteNonQuery();
+        Console.WriteLine($"{rowsAffected} rows were affected.");
+    }
+}
+
+
+buscar usuario
+string connectionString = "server=localhost;user id=root;password=yourpassword;database=yourdatabase";
+string query = "SELECT * FROM users WHERE id = @id";
+
+using (MySqlConnection connection = new MySqlConnection(connectionString))
+{
+    using (MySqlCommand command = new MySqlCommand(query, connection))
+    {
+        command.Parameters.AddWithValue("@id", 1);
+        connection.Open();
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            if (reader.Read())
+            {
+                int id = reader.GetInt32("id");
+                string name = reader.GetString("name");
+                string email = reader.GetString("email");
+                Console.WriteLine($"ID: {id}, Name: {name}, Email: {email}");
+            }
+            else
+            {
+                Console.WriteLine("No rows were returned.");
+            }
+        }
+    }
+}
+
+exibit tds
+string connectionString = "server=localhost;user id=root;password=yourpassword;database=yourdatabase";
+string query = "SELECT * FROM users";
+
+using (MySqlConnection connection = new MySqlConnection(connectionString))
+{
+    using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, connection))
+    {
+        DataTable dataTable = new DataTable();
+        adapter.Fill(dataTable);
+        dataGridView1.DataSource = dataTable;
+    }
+}
+
+obs
+Certifique-se de substituir "localhost", "root", "yourpassword" e "yourdatabase" pelos valores corretos para o seu banco de dados. Além disso, adapte as consultas SQL de acordo com a estrutura da sua tabela.
+
+
+
+
+
+
