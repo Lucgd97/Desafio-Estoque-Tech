@@ -249,6 +249,52 @@ obs
 Certifique-se de substituir "localhost", "root", "yourpassword" e "yourdatabase" pelos valores corretos para o seu banco de dados. Além disso, adapte as consultas SQL de acordo com a estrutura da sua tabela.
 
 
+v5
+string connectionString = "server=localhost;user id=root;password=yourpassword;database=yourdatabase";
+string query = "SELECT * FROM users";
+
+using (MySqlConnection connection = new MySqlConnection(connectionString))
+{
+    using (MySqlCommand command = new MySqlCommand(query, connection))
+    {
+        connection.Open();
+        using (MySqlDataReader reader = command.ExecuteReader())
+        {
+            while (reader.Read())
+            {
+                int id = reader.GetInt32("id");
+                string name = reader.GetString("name");
+                string email = reader.GetString("email");
+                Console.WriteLine($"ID: {id}, Name: {name}, Email: {email}");
+            }
+        }
+    }
+}
+
+v6
+string connectionString = "server=localhost;user id=root;password=yourpassword;database=yourdatabase";
+string query = "SELECT * FROM users";
+
+using (MySqlConnection connection = new MySqlConnection(connectionString))
+{
+    using (MySqlCommand command = new MySqlCommand(query, connection))
+    {
+        await connection.OpenAsync();
+        using (MySqlDataReader reader = await command.ExecuteReaderAsync())
+        {
+            while (await reader.ReadAsync())
+            {
+                int id = reader.GetInt32("id");
+                string name = reader.GetString("name");
+                string email = reader.GetString("email");
+                Console.WriteLine($"ID: {id}, Name: {name}, Email: {email}");
+            }
+        }
+    }
+}
+
+
+
 
 
 

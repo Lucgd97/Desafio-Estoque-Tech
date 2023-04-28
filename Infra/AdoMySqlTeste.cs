@@ -3,6 +3,7 @@ using ProdutoEstoque.Infra.Interface;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.Common;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,44 +28,48 @@ namespace ProdutoEstoque.Infra
             return this.localGravacao;
         }
 
-        public async Task<T?> BuscarPorId(string id)
+        public async Task<T?> BuscarPorId<T>(string id) where T : class, new()
         {
             string query = "SELECT * FROM users WHERE id = @id";
+            T? objeto = null;
 
             await using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
                 await using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@id", 1);
+                    command.Parameters.AddWithValue("@id", id);
                     connection.Open();
-                    await using (MySqlDataReader reader = command.ExecuteReader())
+                    using (DbDataReader reader = await command.ExecuteReaderAsync())
                     {
+                        objeto = Activator.CreateInstance<T>();
+
                         if (reader.Read())
                         {
-                            string id = reader.GetString("id");
-                            string nome = reader.GetString("nome");
-                            string codigoProduto = reader.GetString("codigoProduto");
-                            string quantidade = reader.GetString("quantidade");
-                            Console.WriteLine($"ID: {id}, Nome: {nome}, Código Produto: {codigoProduto}, Quantidade: {quantidade}");
-                        }
-                        else
-                        {
-                            Console.WriteLine("No rows were returned.");
+
+                            foreach (var prop in typeof(T).GetProperties())
+                            {
+                                var valor = reader[prop.Name];
+                                if (valor != DBNull.Value)
+                                {
+                                    prop.SetValue(objeto, valor);
+                                }
+                            }
                         }
                     }
                 }
             }
 
+            return objeto;
         }
 
         public async Task Excluir(T objeto)
         {            
-            string connectionString = "server=localhost;user id=root;password=yourpassword;database=yourdatabase";
+            
             string query = "DELETE FROM users WHERE id = @id";
 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            await using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand command = new MySqlCommand(query, connection))
+                await using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@id", 1);
                     connection.Open();
@@ -79,9 +84,9 @@ namespace ProdutoEstoque.Infra
             string connectionString = "server=localhost;user id=root;password=yourpassword;database=yourdatabase";
             string query = "DELETE FROM users";
 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            await using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand command = new MySqlCommand(query, connection))
+                await using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
                     connection.Open();
                     int rowsAffected = command.ExecuteNonQuery();
@@ -94,9 +99,9 @@ namespace ProdutoEstoque.Infra
         {
             string query = "INSERT INTO users (nome, codigoProduto, quantidade) VALUES (@nome, @codigoProduto, @quantidade)";
 
-            using (MySqlConnection connection = new MySqlConnection(connectionString))
+            await using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlCommand command = new MySqlCommand(query, connection))
+                await using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
                     command.Parameters.AddWithValue("@nome", "Mussarela");
                     command.Parameters.AddWithValue("@codigoProduto", "2");
@@ -111,16 +116,26 @@ namespace ProdutoEstoque.Infra
         public async Task<List<T>> Todos()
         {
             string query = "SELECT * FROM users";
+            T? objeto;
 
-            await using (MySqlConnection connection = new MySqlConnection(connectionString))
+            using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
-                using (MySqlDataAdapter adapter = new MySqlDataAdapter(query, connection))
+                using (MySqlCommand command = new MySqlCommand(query, connection))
                 {
-                    DataTable dataTable = new DataTable();
-                    adapter.Fill(dataTable);
-                    dataGridView1.DataSource = dataTable;
+                    await connection.OpenAsync();
+                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            int id = reader.GetInt32("id");
+                            string name = reader.GetString("name");
+                            string email = reader.GetString("email");
+                            Console.WriteLine($"ID: {id}, Name: {name}, Email: {email}");
+                        }
+                    }
                 }
             }
+            return objeto;
         }
     }
 }
