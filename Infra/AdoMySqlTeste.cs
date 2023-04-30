@@ -161,13 +161,13 @@ namespace ProdutoEstoque.Infra
                         while (await reader.ReadAsync())
                         {
                             int id = reader.GetInt32("id");
-                            string name = reader.GetString("name");
-                            string email = reader.GetString("email");
+                            string produto = reader.GetString("produto");
+                            string estoque = reader.GetString("quantidade");
 
                             T objeto = Activator.CreateInstance<T>();
                             typeof(T).GetProperty("id").SetValue(objeto, id);
-                            typeof(T).GetProperty("name").SetValue(objeto, name);
-                            typeof(T).GetProperty("email").SetValue(objeto, email);
+                            typeof(T).GetProperty("produto").SetValue(objeto, produto);
+                            typeof(T).GetProperty("quantidade").SetValue(objeto, estoque);
 
                             listaObjetos.Add(objeto);
                         }
