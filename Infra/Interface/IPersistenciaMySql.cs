@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace ProdutoEstoque.Infra.Interface
 {
-    public interface IPersistencia<T>
+    public interface IPersistenciaMySql<T>
     {
         Task Salvar(T objeto);
         Task ExcluirTudo();
         Task Excluir(T objeto);
         Task<List<T>> Todos();
-        Task<T?> BuscarPorId(string id);
+        Task<T?> BuscarPorId<T>(string id) where T : class, new();
 
 
         string GetLocalGravacao();

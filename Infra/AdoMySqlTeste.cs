@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ProdutoEstoque.Infra
 {
-    public class AdoMySqlTeste<T> : IPersistencia<T>
+    public class AdoMySqlTeste<T> : IPersistenciaMySql<T>
     {
         string connectionString = "server=localhost;user id=root;password=33426110;database=estoque_tech_driver";
 
