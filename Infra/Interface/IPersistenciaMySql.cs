@@ -13,8 +13,6 @@ namespace ProdutoEstoque.Infra.Interface
         Task Excluir(T objeto);
         Task<List<T>> Todos();
         Task<T?> BuscarPorId<T>(string id) where T : class, new();
-
-
-        string GetLocalGravacao();
+                
     }
 }

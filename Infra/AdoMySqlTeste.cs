@@ -12,20 +12,20 @@ using System.Threading.Tasks;
 
 namespace ProdutoEstoque.Infra
 {
-    public class AdoMySqlTeste<T> : IPersistenciaMySql<T>
+    public class AdoMySqlTeste<T> : IPersistencia<T>
     {
         string connectionString = "server=localhost;user id=root;password=33426110;database=estoque_tech_driver";
 
         public AdoMySqlTeste(string localGravacao)
         {
-            this.localGravacao = localGravacao;
+            connectionString = localGravacao;
         }
 
-        private string localGravacao = "";
+        
 
         public string GetLocalGravacao()
         {
-            return this.localGravacao;
+            return connectionString;
         }
 
         //public async Task<T?> BuscarPorId<T>(string id) where T : class, new()
@@ -130,7 +130,7 @@ namespace ProdutoEstoque.Infra
 
         public async Task Salvar(T objeto)
         {
-            string query = "INSERT INTO users (nome, codigoProduto, quantidade) VALUES (@nome, @codigoProduto, @quantidade)";
+            string query = "INSERT INTO users (nome, codigoProduto, fornecedor) VALUES (@nome, @codigoProduto, @fornecedor)";
 
             await using (MySqlConnection connection = new MySqlConnection(connectionString))
             {
@@ -138,7 +138,7 @@ namespace ProdutoEstoque.Infra
                 {
                     command.Parameters.AddWithValue("@nome", "Mussarela");
                     command.Parameters.AddWithValue("@codigoProduto", "2");
-                    command.Parameters.AddWithValue("@quantidade", "15");
+                    command.Parameters.AddWithValue("@fornecedor", "Devito");
                     connection.Open();
                     int rowsAffected = command.ExecuteNonQuery();
                     Console.WriteLine($"{rowsAffected} rows were affected.");
@@ -162,12 +162,12 @@ namespace ProdutoEstoque.Infra
                         {
                             int id = reader.GetInt32("id");
                             string produto = reader.GetString("produto");
-                            string estoque = reader.GetString("quantidade");
+                            string fornecedor = reader.GetString("fornecedor");
 
                             T objeto = Activator.CreateInstance<T>();
                             typeof(T).GetProperty("id").SetValue(objeto, id);
                             typeof(T).GetProperty("produto").SetValue(objeto, produto);
-                            typeof(T).GetProperty("quantidade").SetValue(objeto, estoque);
+                            typeof(T).GetProperty("fornecedor").SetValue(objeto, fornecedor);
 
                             listaObjetos.Add(objeto);
                         }

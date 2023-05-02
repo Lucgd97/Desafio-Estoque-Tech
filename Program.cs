@@ -3,9 +3,9 @@ using Models;
 using ProdutoEstoque.Infra;
 using ProdutoEstoque.Servicos;
 
-string localGravacaoDev = Environment.GetEnvironmentVariable("LOCAL_GRAVACAO_DEV_ESTOQUE_TECH") ?? "/tmp";
-ProdutoServico produtoServico = new ProdutoServico(new JsonDriver<Produto>(localGravacaoDev));
-EstoqueServico estoqueServico = new EstoqueServico(new JsonDriver<Estoque>(localGravacaoDev));
+string localGravacaoDev = "server=localhost;user id=root;password=33426110;database=estoque_tech_driver";
+ProdutoServico produtoServico = new ProdutoServico(new AdoMySqlTeste<Produto>(localGravacaoDev));
+EstoqueServico estoqueServico = new EstoqueServico(new AdoMySqlTeste<Estoque>(localGravacaoDev));
 
 async Task<List<Produto>> TodosProdutos()
 {
