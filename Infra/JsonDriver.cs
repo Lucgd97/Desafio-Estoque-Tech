@@ -24,13 +24,13 @@ namespace ProdutoEstoque.Infra
             return this.localGravacao;
         }
 
-        public async Task<T?> BuscarPorId(string id)
+        public async Task<T?> BuscarPorId<T>(string id)
         {
-            var lista = await Todos();
+            var lista = await Todos<T>();
             return buscaListaId(lista, id);
         }
 
-        private T? buscaListaId([NotNull] List<T> lista, string id)
+        private T? buscaListaId<T>([NotNull] List<T> lista, string id)
         {
             return lista.Find(o => o?.GetType().GetProperty("Id")?.GetValue(o)?.ToString() == id);
         }
@@ -39,7 +39,7 @@ namespace ProdutoEstoque.Infra
         {
             if(objeto == null) return;
 
-            var lista = await Todos();
+            var lista = await Todos<T>();
 
             var id = objeto.GetType().GetProperty("Id")?.GetValue(objeto)?.ToString();
 
@@ -73,7 +73,7 @@ namespace ProdutoEstoque.Infra
             }
         }
 
-        public async Task<List<T>> Todos()
+        public async Task<List<T>> Todos<T>()
         {
             var nome = typeof(T).Name.ToLower();
 

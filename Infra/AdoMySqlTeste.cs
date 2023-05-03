@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,7 +29,54 @@ namespace ProdutoEstoque.Infra
             return connectionString;
         }
 
-        //public async Task<T?> BuscarPorId<T>(string id) where T : class, new()
+        // cod antigo
+        //public async Task<T?> BuscarPorId(string id)
+        //{
+        //    var lista = await Todos<T>();
+        //    return lista.buscaListaId(id);
+        //}
+
+        public async Task<T?> BuscarPorId(string id)
+        {
+            var lista = await Todos<T>();
+            return lista.buscaListaId(id);
+        }
+
+        private async Task<dynamic> buscaListaId([NotNull] List<dynamic> lista, string id)
+        {
+            string query = "SELECT * FROM users WHERE id = @id";
+            dynamic objeto = null;
+
+            await using (MySqlConnection connection = new MySqlConnection(connectionString))
+            {
+                await using (MySqlCommand command = new MySqlCommand(query, connection))
+                {
+                    command.Parameters.AddWithValue("@id", id);
+                    connection.Open();
+                    using (DbDataReader reader = await command.ExecuteReaderAsync())
+                    {
+                        objeto = Activator.CreateInstance(lista.GetType().GetGenericArguments()[0]);
+
+                        if (reader.Read())
+                        {
+                            foreach (var prop in objeto.GetType().GetProperties())
+                            {
+                                var valor = reader[prop.Name];
+                                if (valor != DBNull.Value)
+                                {
+                                    prop.SetValue(objeto, valor);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return objeto;
+        }
+
+
+        //private async Task<T?> buscaListaId<T>([NotNull] List<T> lista, string id)
         //{
         //    string query = "SELECT * FROM users WHERE id = @id";
         //    T? objeto = null;
@@ -62,37 +110,73 @@ namespace ProdutoEstoque.Infra
         //    return objeto;
         //}
 
-        public async Task<T?> BuscarPorId<T>(string id) where T : class, new()
-        {
-            string query = "SELECT * FROM users WHERE id = @id";
-            T? objeto = null;
+        //private async Task<T?> buscaListaId<T>([NotNull] List<T> lista, string id) where T : class, new()
+        //{
+        //    string query = "SELECT * FROM users WHERE id = @id";
+        //    T? objeto = null;
 
-            await using (MySqlConnection connection = new MySqlConnection(connectionString))
-            {
-                await using (MySqlCommand command = new MySqlCommand(query, connection))
-                {
-                    command.Parameters.AddWithValue("@id", id);
-                    await connection.OpenAsync();
-                    using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
-                    {
-                        if (reader.Read())
-                        {
-                            objeto = Activator.CreateInstance<T>();
-                            foreach (var prop in typeof(T).GetProperties())
-                            {
-                                if (!reader.IsDBNull(reader.GetOrdinal(prop.Name)))
-                                {
-                                    object value = reader[prop.Name];
-                                    prop.SetValue(objeto, value);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+        //    await using (MySqlConnection connection = new MySqlConnection(connectionString))
+        //    {
+        //        await using (MySqlCommand command = new MySqlCommand(query, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@id", id);
+        //            connection.Open();
+        //            using (DbDataReader reader = await command.ExecuteReaderAsync())
+        //            {
+        //                objeto = Activator.CreateInstance<T>();
 
-            return objeto;
-        }
+        //                if (reader.Read())
+        //                {
+
+        //                    foreach (var prop in typeof(T).GetProperties())
+        //                    {
+        //                        var valor = reader[prop.Name];
+        //                        if (valor != DBNull.Value)
+        //                        {
+        //                            prop.SetValue(objeto, valor);
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return objeto;
+        //}
+
+
+
+        //public async Task<T?> BuscarPorId<T>(string id) where T : class, new()
+        //{
+        //    string query = "SELECT * FROM users WHERE id = @id";
+        //    T? objeto = null;
+
+        //    await using (MySqlConnection connection = new MySqlConnection(connectionString))
+        //    {
+        //        await using (MySqlCommand command = new MySqlCommand(query, connection))
+        //        {
+        //            command.Parameters.AddWithValue("@id", id);
+        //            await connection.OpenAsync();
+        //            using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+        //            {
+        //                if (reader.Read())
+        //                {
+        //                    objeto = Activator.CreateInstance<T>();
+        //                    foreach (var prop in typeof(T).GetProperties())
+        //                    {
+        //                        if (!reader.IsDBNull(reader.GetOrdinal(prop.Name)))
+        //                        {
+        //                            object value = reader[prop.Name];
+        //                            prop.SetValue(objeto, value);
+        //                        }
+        //                    }
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return objeto;
+        //}
 
 
         public async Task Excluir(T objeto)
@@ -146,7 +230,7 @@ namespace ProdutoEstoque.Infra
             }
         }
 
-        public async Task<List<T>> Todos()
+        public async Task<List<T>> Todos<T>()
         {
             string query = "SELECT * FROM users";
             List<T> listaObjetos = new List<T>();
@@ -160,14 +244,16 @@ namespace ProdutoEstoque.Infra
                     {
                         while (await reader.ReadAsync())
                         {
-                            int id = reader.GetInt32("id");
-                            string produto = reader.GetString("produto");
-                            string fornecedor = reader.GetString("fornecedor");
-
                             T objeto = Activator.CreateInstance<T>();
-                            typeof(T).GetProperty("id").SetValue(objeto, id);
-                            typeof(T).GetProperty("produto").SetValue(objeto, produto);
-                            typeof(T).GetProperty("fornecedor").SetValue(objeto, fornecedor);
+
+                            foreach (var prop in typeof(T).GetProperties())
+                            {
+                                var valor = reader[prop.Name];
+                                if (valor != DBNull.Value)
+                                {
+                                    prop.SetValue(objeto, valor);
+                                }
+                            }
 
                             listaObjetos.Add(objeto);
                         }
@@ -177,6 +263,38 @@ namespace ProdutoEstoque.Infra
 
             return listaObjetos;
         }
+
+        //public async Task<List<T>> Todos<T>()
+        //{
+        //    string query = "SELECT * FROM users";
+        //    List<T> listaObjetos = new List<T>();
+
+        //    using (MySqlConnection connection = new MySqlConnection(connectionString))
+        //    {
+        //        using (MySqlCommand command = new MySqlCommand(query, connection))
+        //        {
+        //            await connection.OpenAsync();
+        //            using (MySqlDataReader reader = (MySqlDataReader)await command.ExecuteReaderAsync())
+        //            {
+        //                while (await reader.ReadAsync())
+        //                {
+        //                    int id = reader.GetInt32("id");
+        //                    string produto = reader.GetString("produto");
+        //                    string fornecedor = reader.GetString("fornecedor");
+
+        //                    T objeto = Activator.CreateInstance<T>();
+        //                    typeof(T).GetProperty("id").SetValue(objeto, id);
+        //                    typeof(T).GetProperty("produto").SetValue(objeto, produto);
+        //                    typeof(T).GetProperty("fornecedor").SetValue(objeto, fornecedor);
+
+        //                    listaObjetos.Add(objeto);
+        //                }
+        //            }
+        //        }
+        //    }
+
+        //    return listaObjetos;
+        //}
 
         //public async Task<List<T>> Todos()
         //{
